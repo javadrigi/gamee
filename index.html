@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#05060f">
+<title>کاوشگران فضا 🚀 | بازی نجومی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#05060f;
+  --card:rgba(20,24,50,.72);
+  --border:rgba(120,160,255,.22);
+  --cyan:#4cc9f0;
+  --purple:#9d4edd;
+  --gold:#ffd166;
+  --green:#06d6a0;
+  --red:#ef476f;
+  --text:#eaf0ff;
+  --muted:#93a0c8;
+}
+html,body{height:100%}
+body{
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;position:relative;
+  padding-bottom:30px;
+}
+#space{position:fixed;inset:0;z-index:-3;
+  background:
+    radial-gradient(ellipse at 18% 8%, rgba(157,78,221,.30), transparent 55%),
+    radial-gradient(ellipse at 82% 85%, rgba(76,201,240,.22), transparent 55%),
+    radial-gradient(ellipse at 55% 40%, rgba(255,209,102,.07), transparent 50%),
+    #05060f;
+}
+#stars{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3.4s infinite ease-in-out}
+@keyframes twinkle{0%,100%{opacity:.12;transform:scale(.6)}50%{opacity:1;transform:scale(1)}}
+.orb{position:fixed;border-radius:50%;z-index:-1;filter:blur(1px);opacity:.5;pointer-events:none}
+
+.wrap{max-width:920px;margin:0 auto;padding:16px}
+
+/* ---------- SCREENS ---------- */
+.screen{display:none}
+.screen.active{display:block;animation:fadeUp .45s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ---------- HOME ---------- */
+.logo{text-align:center;padding:34px 10px 12px}
+.logo .planet-big{font-size:78px;display:block;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 0 26px rgba(76,201,240,.55))}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-16px) rotate(4deg)}}
+.logo h1{
+  font-size:clamp(1.8rem,6vw,3rem);font-weight:900;margin-top:8px;letter-spacing:-.5px;
+  background:linear-gradient(100deg,#4cc9f0,#9d4edd 45%,#ffd166);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.logo p{color:var(--muted);margin-top:10px;font-size:1rem;line-height:1.9}
+
+.menu{display:grid;gap:14px;max-width:420px;margin:26px auto 0}
+.btn{
+  font-family:inherit;font-weight:800;font-size:1.05rem;cursor:pointer;
+  border:2px solid var(--border);border-radius:18px;padding:16px 20px;
+  background:linear-gradient(160deg,rgba(45,55,110,.9),rgba(20,25,55,.95));
+  color:var(--text);transition:.22s;position:relative;overflow:hidden;
+}
+.btn:hover{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 10px 30px rgba(76,201,240,.28)}
+.btn:active{transform:translateY(0)}
+.btn.primary{background:linear-gradient(140deg,#4cc9f0,#7b2ff7);border-color:transparent;color:#fff;box-shadow:0 10px 34px rgba(120,60,240,.4)}
+.btn.primary:hover{box-shadow:0 14px 42px rgba(120,60,240,.6)}
+.btn.gold{background:linear-gradient(140deg,#ffd166,#f79d2c);border-color:transparent;color:#241500}
+.btn.ghost{background:rgba(255,255,255,.05)}
+.btn .ic{font-size:1.25rem;margin-inline-end:8px}
+
+/* ---------- CARDS ---------- */
+.panel{
+  background:var(--card);backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:24px;padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.panel h2{font-size:1.3rem;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:9px}
+.panel h2 .ic{font-size:1.4rem}
+
+/* ---------- SETUP ---------- */
+.field{margin-bottom:20px}
+.field label{display:block;font-weight:700;margin-bottom:9px;color:var(--muted);font-size:.92rem}
+input[type=text]{
+  width:100%;font-family:inherit;font-size:1.05rem;font-weight:600;padding:14px 16px;
+  border-radius:14px;border:2px solid var(--border);background:rgba(10,14,35,.85);
+  color:var(--text);outline:none;transition:.2s;
+}
+input[type=text]:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(76,201,240,.15)}
+
+.avatars{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.av{
+  width:46px;height:46px;border-radius:14px;font-size:1.5rem;display:grid;place-items:center;
+  background:rgba(255,255,255,.05);border:2px solid transparent;cursor:pointer;transition:.18s;
+}
+.av:hover{background:rgba(76,201,240,.15);transform:scale(1.08)}
+.av.sel{border-color:var(--cyan);background:rgba(76,201,240,.22);box-shadow:0 0 18px rgba(76,201,240,.4)}
+
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{
+  flex:1;min-width:110px;font-family:inherit;font-weight:700;font-size:.95rem;cursor:pointer;
+  padding:14px 10px;border-radius:16px;border:2px solid var(--border);
+  background:rgba(255,255,255,.045);color:var(--text);transition:.2s;text-align:center;
+}
+.chip:hover{border-color:var(--purple)}
+.chip.sel{background:linear-gradient(140deg,rgba(76,201,240,.28),rgba(157,78,221,.28));border-color:var(--cyan);box-shadow:0 0 20px rgba(76,201,240,.28)}
+.chip small{display:block;font-weight:500;font-size:.75rem;color:var(--muted);margin-top:4px}
+.chip.sel small{color:#cfe6ff}
+
+/* ---------- GAME TOP ---------- */
+.game-top{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:14px}
+.pcard{
+  background:var(--card);border:2px solid var(--border);border-radius:18px;
+  padding:10px 12px;display:flex;align-items:center;gap:9px;transition:.3s;position:relative;
+}
+.pcard.active{border-color:var(--cyan);box-shadow:0 0 26px rgba(76,201,240,.35);transform:scale(1.03)}
+.pcard.active::after{
+  content:'';position:absolute;inset:-2px;border-radius:18px;border:2px solid var(--cyan);
+  animation:pulse 1.6s infinite;pointer-events:none;
+}
+@keyframes pulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:0;transform:scale(1.06)}}
+.pcard .pav{font-size:1.7rem;line-height:1}
+.pcard .pinfo{flex:1;min-width:0}
+.pcard .pnm{font-weight:800;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard .psc{font-weight:900;font-size:1.15rem;color:var(--gold);font-variant-numeric:tabular-nums}
+.vsbadge{
+  font-weight:900;font-size:.82rem;text-align:center;padding:8px 10px;border-radius:14px;
+  background:linear-gradient(140deg,rgba(157,78,221,.35),rgba(76,201,240,.35));
+  border:1px solid var(--border);white-space:nowrap;
+}
+.vsbadge span{display:block;font-size:1.05rem;color:var(--gold)}
+
+/* ---------- TIMER ---------- */
+.timer-wrap{height:10px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin-bottom:16px}
+#timerFill{height:100%;width:100%;border-radius:99px;background:var(--green);transition:width .1s linear,background .3s}
+.timer-row{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-bottom:6px;font-weight:600}
+
+/* ---------- QUESTION ---------- */
+.qcard{
+  background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--border);
+  border-radius:24px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.qtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap}
+.badge{
+  font-size:.74rem;font-weight:800;padding:6px 13px;border-radius:99px;
+  background:linear-gradient(140deg,rgba(76,201,240,.3),rgba(157,78,221,.3));
+  border:1px solid var(--border);
+}
+.progress{font-size:.78rem;color:var(--muted);font-weight:700}
+.qvisual{font-size:64px;text-align:center;margin:6px 0 12px;animation:float 4.5s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,209,102,.35))}
+.qtext{font-size:clamp(1.05rem,3.4vw,1.35rem);font-weight:800;line-height:1.85;text-align:center;margin-bottom:20px}
+
+.options{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+.options.two{grid-template-columns:1fr 1fr}
+.opt{
+  font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;color:var(--text);
+  background:linear-gradient(160deg,rgba(42,52,102,.88),rgba(18,22,50,.95));
+  border:2px solid var(--border);border-radius:18px;padding:16px 14px;
+  transition:.2s;display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;
+  min-height:64px;
+}
+.opt:hover:not(:disabled){transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 10px 28px rgba(76,201,240,.28)}
+.opt:disabled{cursor:default}
+.opt.img-opt{flex-direction:column;gap:4px;padding:14px 8px}
+.opt-emoji{font-size:2.1rem;line-height:1.1}
+.opt-label{font-size:.95rem}
+.opt.correct{background:linear-gradient(160deg,#0e8f6c,#06d6a0);border-color:#06d6a0;color:#03150e;box-shadow:0 0 30px rgba(6,214,160,.5)}
+.opt.wrong{background:linear-gradient(160deg,#8c1235,#ef476f);border-color:#ef476f;color:#fff;animation:shake .45s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.opt.dim{opacity:.42}
+
+.feedback{
+  margin-top:16px;border-radius:18px;padding:15px 18px;font-weight:700;line-height:1.85;
+  display:none;animation:fadeUp .3s ease;font-size:.95rem;
+}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(6,214,160,.14);border:1px solid rgba(6,214,160,.5);color:#8bffdc}
+.feedback.no{background:rgba(239,71,111,.13);border:1px solid rgba(239,71,111,.5);color:#ffb3c6}
+.feedback .fb-title{font-size:1.05rem;font-weight:900;display:block;margin-bottom:5px}
+
+/* ---------- RESULT ---------- */
+.result-hero{text-align:center;padding:20px 10px}
+.result-hero .trophy{font-size:80px;display:block;animation:float 3.6s ease-in-out infinite;filter:drop-shadow(0 0 32px rgba(255,209,102,.7))}
+.result-hero h2{font-size:clamp(1.4rem,5vw,2rem);font-weight:900;margin-top:12px}
+.result-hero p{color:var(--muted);margin-top:8px;line-height:1.9}
+.score-line{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:16px;
+  padding:13px 16px;margin-bottom:10px;font-weight:700;
+}
+.score-line.winner{border-color:var(--gold);background:linear-gradient(100deg,rgba(255,209,102,.16),rgba(255,209,102,.03));box-shadow:0 0 24px rgba(255,209,102,.18)}
+.score-line .nm{display:flex;align-items:center;gap:9px}
+.score-line .val{color:var(--gold);font-weight:900;font-size:1.2rem;font-variant-numeric:tabular-nums}
+
+.roundpips{display:flex;gap:6px;margin-inline-start:8px}
+.pip{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid var(--border)}
+.pip.on{background:var(--gold);box-shadow:0 0 12px var(--gold);border-color:var(--gold)}
+
+/* ---------- LEAGUE TABLE ---------- */
+.tbl{width:100%;border-collapse:collapse;font-size:.92rem}
+.tbl th{color:var(--muted);font-weight:700;font-size:.78rem;padding:10px 8px;text-align:right;border-bottom:1px solid var(--border)}
+.tbl td{padding:12px 8px;border-bottom:1px solid rgba(120,160,255,.1);font-weight:700}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .rank{width:38px}
+.tbl .rank span{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.07);font-size:.82rem}
+.tbl tr:nth-child(1) .rank span{background:linear-gradient(140deg,#ffd166,#f79d2c);color:#241500}
+.tbl tr:nth-child(2) .rank span{background:linear-gradient(140deg,#d8e2ff,#9fb0d8);color:#131a30}
+.tbl tr:nth-child(3) .rank span{background:linear-gradient(140deg,#e39a5c,#b96a2e);color:#241500}
+.tbl .num{font-variant-numeric:tabular-nums;color:var(--gold)}
+.empty{text-align:center;color:var(--muted);padding:34px 10px;line-height:2}
+
+/* ---------- MISC ---------- */
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.row .btn{flex:1;min-width:130px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.iconbtn{
+  width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:1.2rem;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);cursor:pointer;transition:.2s;
+}
+.iconbtn:hover{background:rgba(76,201,240,.18);border-color:var(--cyan)}
+.hintbox{background:rgba(76,201,240,.08);border:1px dashed rgba(76,201,240,.4);border-radius:16px;padding:14px 16px;font-size:.88rem;line-height:2;color:#bcd8ee;margin-top:14px}
+.hintbox b{color:var(--cyan)}
+.tag{display:inline-block;font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:99px;background:rgba(157,78,221,.25);border:1px solid rgba(157,78,221,.5);margin-inline-end:6px}
+
+.confetti{position:fixed;top:-24px;border-radius:2px;z-index:9999;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(108vh) rotate(760deg);opacity:.15}}
+
+.turnflash{
+  position:fixed;inset:0;display:grid;place-items:center;z-index:9998;pointer-events:none;
+  background:rgba(5,6,15,.72);backdrop-filter:blur(6px);animation:flashOut 1.15s ease forwards;
+}
+.turnflash .tf-in{text-align:center;animation:pop .5s cubic-bezier(.2,1.6,.5,1)}
+.turnflash .tf-av{font-size:74px;display:block}
+.turnflash .tf-nm{font-size:1.6rem;font-weight:900;margin-top:6px}
+@keyframes flashOut{0%{opacity:1}70%{opacity:1}100%{opacity:0}}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+
+@media(max-width:620px){
+  .options{grid-template-columns:1fr}
+  .options.two{grid-template-columns:1fr 1fr}
+  .game-top{grid-template-columns:1fr auto 1fr;gap:6px}
+  .pcard{padding:8px;border-radius:14px}
+  .pcard .pav{font-size:1.35rem}
+  .pcard .pnm{font-size:.76rem}
+  .pcard .psc{font-size:.98rem}
+  .vsbadge{font-size:.68rem;padding:6px 7px}
+  .qcard{padding:16px}
+  .panel{padding:16px}
+}
+</style>
+</head>
+<body>
+<div id="space"></div>
+<div id="stars"></div>
+
+<div class="wrap">
+
+  <!-- ================= HOME ================= -->
+  <section class="screen active" id="sc-home">
+    <div class="logo">
+      <span class="planet-big">🪐</span>
+      <h1>کاوشگران فضا</h1>
+      <p>یک نبرد دو نفره در دل کهکشان! 🌌<br>سوال‌های نجومی، تصویری و هیجان‌انگیز</p>
+    </div>
+    <div class="menu">
+      <button class="btn primary" onclick="go('sc-setup')"><span class="ic">🚀</span>شروع بازی جدید</button>
+      <button class="btn ghost" onclick="renderLeague();go('sc-league')"><span class="ic">🏆</span>جدول لیگ و رکوردها</button>
+      <button class="btn ghost" onclick="go('sc-help')"><span class="ic">📖</span>راهنمای بازی</button>
+    </div>
+    <div class="hintbox" style="max-width:520px;margin:24px auto 0;text-align:center">
+      💡 <b>نکته:</b> هرچه سریع‌تر جواب بدهی، امتیاز بیشتری می‌گیری!
+    </div>
+  </section>
+
+  <!-- ================= SETUP ================= -->
+  <section class="screen" id="sc-setup">
+    <div class="topbar">
+      <button class="iconbtn" onclick="go('sc-home')">↩</button>
+      <h2 style="font-size:1.15rem;font-weight:900">⚙️ تنظیمات بازی</h2>
+      <div style="width:44px"></div>
+    </div>
+
+    <div class="panel">
+      <h2><span class="ic">👥</span>بازیکن‌ها</h2>
+      <div class="field">
+        <label>نام بازیکن اول</label>
+        <input type="text" id="name0" value="کاوشگر ۱" maxlength="14">
+        <div class="avatars" id="av0"></div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>نام بازیکن دوم</label>
+        <input type="text" id="name1" value="کاوشگر ۲" maxlength="14">
+        <div class="avatars" id="av1"></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <h2><span class="ic">📊</span>سطح دشواری</h2>
+      <div class="chips" id="diffChips">
+        <button class="chip sel" data-diff="easy">آسان 🌙<small>مناسب کودک • ۲۵ ثانیه</small></button>
+        <button class="chip" data-diff="medium">متوسط 🪐<small>چالش‌برانگیز • ۲۰ ثانیه</small></button>
+        <button class="chip" data-diff="hard">سخت 🌌<small>برای نوجوان حرفه‌ای • ۱۵ ثانیه</small></button>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <h2><span class="ic">🎮</span>حالت بازی</h2>
+      <div class="chips" id="modeChips">
+        <button class="chip sel" data-mode="league">لیگ 🏅<small>۵ سوال برای هر بازیکن — برنده با بیشترین امتیاز</small></button>
+        <button class="chip" data-mode="knockout">حذفی 🔥<small>۳ دور، هر دور ۳ سوال — بهترین از ۳</small></button>
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="btn primary" onclick="startGame()"><span class="ic">✨</span>بزن بریم!</button>
+    </div>
+  </section>
+
+  <!-- ================= HELP ================= -->
+  <section class="screen" id="sc-help">
+    <div class="topbar">
+      <button class="iconbtn" onclick="go('sc-home')">↩</button>
+      <h2 style="font-size:1.15rem;font-weight:900">📖 راهنمای بازی</h2>
+      <div style="width:44px"></div>
+    </div>
+    <div class="panel">
+      <h2><span class="ic">🎯</span>چطور بازی کنیم؟</h2>
+      <div class="hintbox" style="margin-top:0">
+        ۱. دو بازیکن نام و آواتار خود را انتخاب می‌کنند.<br>
+        ۲. سطح دشواری (آسان / متوسط / سخت) و حالت بازی (لیگ یا حذفی) را برمی‌گزینند.<br>
+        ۳. بازیکن‌ها به نوبت به سوال‌ها پاسخ می‌دهند.<br>
+        ۴. هر پاسخ درست = امتیاز پایه + پاداش سرعت ⚡<br>
+        ۵. در حالت <b>لیگ</b> برنده کسی است که امتیاز کل بیشتری بگیرد.<br>
+        ۶. در حالت <b>حذفی</b> هر دور برنده دارد؛ هرکس ۲ دور ببرد قهرمان می‌شود.
+      </div>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <h2><span class="ic">🧠</span>انواع سوال</h2>
+      <div class="hintbox" style="margin-top:0">
+        <span class="tag">چهارگزینه‌ای</span> چهار انتخاب متنی<br>
+        <span class="tag">تصویری</span> انتخاب بین تصاویر سیارات و اجرام آسمانی<br>
+        <span class="tag">بله / خیر</span> پاسخ سریع دو گزینه‌ای<br>
+        <span class="tag">صحیح / غلط</span> بررسی درستی یک جمله
+      </div>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <h2><span class="ic">🏅</span>امتیازدهی</h2>
+      <div class="hintbox" style="margin-top:0">
+        آسان: <b>۱۰۰</b> امتیاز پایه<br>
+        متوسط: <b>۱۵۰</b> امتیاز پایه<br>
+        سخت: <b>۲۰۰</b> امتیاز پایه<br>
+        پاداش سرعت: هر ثانیه باقی‌مانده <b>۳ امتیاز</b> اضافه می‌کند ⚡
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GAME ================= -->
+  <section class="screen" id="sc-game">
+    <div class="topbar" style="margin-bottom:10px">
+      <button class="iconbtn" onclick="quitGame()">✕</button>
+      <div class="badge" id="modeBadge">لیگ 🏅</div>
+      <button class="iconbtn" id="muteBtn" onclick="toggleMute()">🔊</button>
+    </div>
+
+    <div class="game-top">
+      <div class="pcard" id="pc0">
+        <div class="pav" id="pav0">🚀</div>
+        <div class="pinfo">
+          <div class="pnm" id="pnm0">بازیکن ۱</div>
+          <div class="psc" id="psc0">۰</div>
+        </div>
+      </div>
+      <div class="vsbadge">دور <span id="roundNum">۱</span></div>
+      <div class="pcard" id="pc1">
+        <div class="pav" id="pav1">👩‍🚀</div>
+        <div class="pinfo">
+          <div class="pnm" id="pnm1">بازیکن ۲</div>
+          <div class="psc" id="psc1">۰</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timer-row">
+      <span id="turnLabel">نوبت: —</span>
+      <span id="timeLabel">⏱ ۲۵</span>
+    </div>
+    <div class="timer-wrap"><div id="timerFill"></div></div>
+
+    <div class="qcard">
+      <div class="qtop">
+        <div class="badge" id="qType">چهارگزینه‌ای</div>
+        <div class="progress" id="qProgress">سوال ۱ از ۵</div>
+      </div>
+      <div class="qvisual" id="qVisual" style="display:none"></div>
+      <div class="qtext" id="qText">...</div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+  </section>
+
+  <!-- ================= ROUND END ================= -->
+  <section class="screen" id="sc-round">
+    <div class="panel">
+      <div class="result-hero" style="padding-top:6px">
+        <span class="trophy" id="roundIcon">🎯</span>
+        <h2 id="roundTitle">پایان دور ۱</h2>
+        <p id="roundSub">—</p>
+      </div>
+      <div id="roundScores"></div>
+      <div class="row">
+        <button class="btn primary" id="roundNextBtn" onclick="afterRound()">ادامه ➜</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FINAL ================= -->
+  <section class="screen" id="sc-final">
+    <div class="panel">
+      <div class="result-hero">
+        <span class="trophy" id="finalIcon">🏆</span>
+        <h2 id="finalTitle">قهرمان کهکشان!</h2>
+        <p id="finalSub">—</p>
+      </div>
+      <div id="finalScores"></div>
+      <div class="row">
+        <button class="btn primary" onclick="rematch()"><span class="ic">🔄</span>بازی دوباره</button>
+        <button class="btn gold" onclick="renderLeague();go('sc-league')"><span class="ic">🏆</span>جدول لیگ</button>
+        <button class="btn ghost" onclick="go('sc-home')"><span class="ic">🏠</span>خانه</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LEAGUE ================= -->
+  <section class="screen" id="sc-league">
+    <div class="topbar">
+      <button class="iconbtn" onclick="go('sc-home')">↩</button>
+      <h2 style="font-size:1.15rem;font-weight:900">🏆 جدول لیگ</h2>
+      <button class="iconbtn" onclick="clearLeague()">🗑</button>
+    </div>
+    <div class="panel">
+      <div id="leagueBody"></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   بانک سوالات
+   type: mcq | image | yn | tf
+   ============================================================ */
+const QUESTIONS = {
+  easy: [
+    {type:'mcq', q:'نزدیک‌ترین سیاره به خورشید کدام است؟', options:['عطارد','زهره','زمین','مریخ'], answer:0, hint:'عطارد اولین سیاره منظومه شمسی است و خیلی سریع دور خورشید می‌چرخد.'},
+    {type:'yn',  q:'آیا ماه از خودش نور دارد؟', options:['بله','خیر'], answer:1, hint:'ماه نور خورشید را بازتاب می‌دهد؛ مثل یک آینه بزرگ در آسمان!'},
+    {type:'image', q:'کدام سیاره حلقه‌های زیبا و معروف دارد؟', options:['زحل','زمین','مریخ','اورانوس'], icons:['🪐','🌍','🔴','🔵'], answer:0, hint:'زحل با حلقه‌های یخی و سنگی‌اش معروف‌ترین سیاره منظومه شمسی است.'},
+    {type:'mcq', q:'خورشید چیست؟', options:['یک ستاره','یک سیاره','یک قمر','یک دنباله‌دار'], answer:0, hint:'خورشید یک ستاره است؛ کره‌ای عظیم از گازهای داغ و درخشان.'},
+    {type:'tf',  q:'زمین سومین سیاره از خورشید است.', options:['صحیح','غلط'], answer:0, hint:'ترتیب: عطارد، زهره، زمین، مریخ، مشتری، زحل، اورانوس، نپتون.'},
+    {type:'image', q:'کدام یک سیاره نیست؟', options:['خورشید','زمین','مریخ','نپتون'], icons:['☀️','🌍','🔴','🔵'], answer:0, hint:'خورشید یک ستاره است، نه سیاره.'},
+    {type:'mcq', q:'ما در کدام کهکشان زندگی می‌کنیم؟', options:['راه شیری','آندرومدا','مثلث','کهکشان سیاه'], answer:0, hint:'خانه ما کهکشان راه شیری است؛ یک کهکشان مارپیچی بزرگ.'},
+    {type:'yn',  q:'آیا مشتری بزرگ‌ترین سیاره منظومه شمسی است؟', options:['بله','خیر'], answer:0, hint:'مشتری آن‌قدر بزرگ است که بیش از ۱۳۰۰ زمین در آن جا می‌شود!'},
+    {type:'mcq', q:'به سیاره مریخ چه لقبی داده‌اند؟', options:['سیاره سرخ','سیاره آبی','سیاره سبز','سیاره طلایی'], answer:0, hint:'خاک مریخ پر از اکسید آهن است و به همین دلیل قرمز دیده می‌شود.'},
+    {type:'tf',  q:'ماه به دور زمین می‌چرخد.', options:['صحیح','غلط'], answer:0, hint:'ماه قمر طبیعی زمین است و هر ۲۷.۳ روز یک بار دور ما می‌چرخد.'},
+    {type:'image', q:'این تصویر کدام جرم آسمانی است؟', visual:'🌍', options:['زمین','مشتری','زهره','عطارد'], icons:['🌍','🟤','🟠','🌑'], answer:0, hint:'زمین تنها سیاره‌ای است که در آن آب مایع و حیات وجود دارد.'},
+    {type:'mcq', q:'کدام یک ستاره است؟', options:['خورشید','ماه','زمین','زهره'], answer:0, hint:'خورشید نزدیک‌ترین ستاره به ماست.'},
+    {type:'mcq', q:'چند سیاره در منظومه شمسی داریم؟', options:['۸','۷','۹','۱۰'], answer:0, hint:'از سال ۲۰۰۶ پلوتو از فهرست سیارات حذف شد و تعداد به ۸ رسید.'},
+    {type:'tf',  q:'خورشید از زمین کوچک‌تر است.', options:['صحیح','غلط'], answer:1, hint:'خورشید حدود ۱۰۹ برابر زمین قطر دارد! فقط دور بودنش آن را کوچک نشان می‌دهد.'},
+    {type:'mcq', q:'کدام سیاره را «سیاره آبی» می‌نامند؟', options:['زمین','نپتون','اورانوس','زهره'], answer:0, hint:'چون بیشتر سطح زمین را آب پوشانده، از فضا آبی دیده می‌شود.'},
+    {type:'tf',  q:'ماه از زمین بزرگ‌تر است.', options:['صحیح','غلط'], answer:1, hint:'قطر ماه حدود یک‌چهارم قطر زمین است.'},
+    {type:'tf',  q:'دنباله‌دارها دنباله‌ای درخشان دارند.', options:['صحیح','غلط'], answer:0, hint:'وقتی دنباله‌دار به خورشید نزدیک می‌شود، یخ‌هایش بخار شده و دنباله می‌سازند.'},
+    {type:'yn',  q:'آیا خورشید یک ستاره است؟', options:['بله','خیر'], answer:0, hint:'بله! خورشید یک ستاره متوسط و زرد رنگ است.'},
+    {type:'mcq', q:'کدام یک قمر است؟', options:['ماه','خورشید','مریخ','زهره'], answer:0, hint:'ماه تنها قمر طبیعی زمین است.'},
+    {type:'image', q:'این تصویر چه چیزی را نشان می‌دهد؟', visual:'☀️', options:['خورشید','ماه','دنباله‌دار','مشتری'], icons:['☀️','🌙','☄️','🟤'], answer:0, hint:'خورشید منبع نور و گرمای زندگی روی زمین است.'}
+  ],
+
+  medium: [
+    {type:'mcq', q:'گرم‌ترین سیاره منظومه شمسی کدام است؟', options:['زهره','عطارد','مریخ','مشتری'], answer:0, hint:'زهره ابرهای ضخیمی دارد که گرما را حبس می‌کند؛ اثر گلخانه‌ای شدید!'},
+    {type:'mcq', q:'«سال نوری» واحد اندازه‌گیری چیست؟', options:['فاصله','زمان','جرم','سرعت'], answer:0, hint:'سال نوری فاصله‌ای است که نور در یک سال طی می‌کند.'},
+    {type:'yn',  q:'آیا صدا در فضای خالی منتقل می‌شود؟', options:['بله','خیر'], answer:1, hint:'صدا برای حرکت به ماده نیاز دارد؛ در خلأ فضایی صدایی شنیده نمی‌شود.'},
+    {type:'image', q:'کدام سیاره به «سیاره سرخ» معروف است؟', options:['مریخ','زهره','نپتون','اورانوس'], icons:['🔴','🟠','🔵','🟢'], answer:0, hint:'رنگ سرخ مریخ از زنگ‌زدگی (اکسید آهن) خاک آن است.'},
+    {type:'mcq', q:'ماه‌گرفتگی چه زمانی رخ می‌دهد؟', options:['زمین بین خورشید و ماه قرار می‌گیرد','ماه بین زمین و خورشید قرار می‌گیرد','خورشید بین زمین و ماه قرار می‌گیرد','ماه و خورشید کنار هم می‌ایستند'], answer:0, hint:'در ماه‌گرفتگی، سایه زمین روی ماه می‌افتد.'},
+    {type:'tf',  q:'ستاره‌ها در روز هم در آسمان هستند.', options:['صحیح','غلط'], answer:0, hint:'نور شدید خورشید باعث می‌شود ستاره‌های دور را در روز نبینیم.'},
+    {type:'mcq', q:'بزرگ‌ترین قمر مشتری کدام است؟', options:['گانیمید','تیتان','اروپا','آیو'], answer:0, hint:'گانیمید حتی از سیاره عطارد هم بزرگ‌تر است!'},
+    {type:'image', q:'این تصویر کدام سیاره است؟', visual:'🪐', options:['زحل','مشتری','اورانوس','نپتون'], icons:['🪐','🟤','🔵','🔷'], answer:0, hint:'زحل دومین سیاره بزرگ منظومه شمسی است.'},
+    {type:'mcq', q:'خورشیدگرفتگی چه زمانی رخ می‌دهد؟', options:['ماه بین زمین و خورشید قرار می‌گیرد','زمین بین خورشید و ماه قرار می‌گیرد','خورشید بین زمین و ماه قرار می‌گیرد','مشتری بین زمین و خورشید می‌آید'], answer:0, hint:'ماه جلوی خورشید را می‌گیرد و سایه‌اش روی زمین می‌افتد.'},
+    {type:'yn',  q:'آیا زهره در جهت مخالف بقیه سیارات می‌چرخد؟', options:['بله','خیر'], answer:0, hint:'زهره برعکس می‌چرخد؛ روی آن خورشید از غرب طلوع می‌کند!'},
+    {type:'mcq', q:'دمای سطح خورشید حدوداً چقدر است؟', options:['۵۵۰۰ درجه سانتی‌گراد','۱۰۰۰ درجه','۲۰۰۰۰ درجه','۵۰۰ درجه'], answer:0, hint:'سطح خورشید حدود ۵۵۰۰ درجه و هسته‌اش میلیون‌ها درجه است.'},
+    {type:'tf',  q:'مشتری یک سیاره سنگی است.', options:['صحیح','غلط'], answer:1, hint:'مشتری یک غول گازی است؛ سطح جامد ندارد.'},
+    {type:'mcq', q:'نزدیک‌ترین ستاره به زمین پس از خورشید کدام است؟', options:['پروکسیما قنطورس','شباهنگ','ستاره قطبی','دب اکبر'], answer:0, hint:'پروکسیما قنطورس حدود ۴.۲ سال نوری از ما فاصله دارد.'},
+    {type:'image', q:'کدام یک قمر زمین است؟', options:['ماه','خورشید','مریخ','زهره'], icons:['🌙','☀️','🔴','🟠'], answer:0, hint:'ماه تنها قمر طبیعی زمین است.'},
+    {type:'mcq', q:'بزرگ‌ترین سیاره منظومه شمسی کدام است؟', options:['مشتری','زحل','نپتون','اورانوس'], answer:0, hint:'مشتری از همه سیارات دیگر روی هم سنگین‌تر است!'},
+    {type:'tf',  q:'ماه حدوداً هر ۲۷ روز یک بار به دور زمین می‌چرخد.', options:['صحیح','غلط'], answer:0, hint:'دقیقاً ۲۷.۳ روز؛ به همین دلیل ماه‌ها را با آن می‌سنجیدند.'},
+    {type:'mcq', q:'«شهاب‌سنگ» چیست؟', options:['سنگی از فضا که به زمین می‌رسد','ستاره‌ای که می‌افتد','قمری کوچک','ابری در فضا'], answer:0, hint:'شهاب‌سنگ بقایای سنگ‌های فضایی است که از جو زمین عبور کرده و به سطح می‌رسد.'},
+    {type:'yn',  q:'آیا خورشید در مرکز منظومه شمسی قرار دارد؟', options:['بله','خیر'], answer:0, hint:'همه سیارات و اجرام به دور خورشید می‌چرخند.'},
+    {type:'image', q:'کدام سیاره گرم‌ترین سیاره منظومه شمسی است؟', options:['زهره','مریخ','نپتون','مشتری'], icons:['🟠','🔴','🔷','🟤'], answer:0, hint:'دمای سطح زهره حدود ۴۶۰ درجه سانتی‌گراد است!'},
+    {type:'mcq', q:'نور خورشید چقدر طول می‌کشد تا به زمین برسد؟', options:['حدود ۸ دقیقه','حدود ۱ دقیقه','حدود ۱ ساعت','حدود ۲۴ ساعت'], answer:0, hint:'نور با سرعت ۳۰۰ هزار کیلومتر بر ثانیه، در ۸ دقیقه و ۲۰ ثانیه می‌رسد.'}
+  ],
+
+  hard: [
+    {type:'mcq', q:'ستاره قطبی در کدام صورت فلکی قرار دارد؟', options:['دب اصغر','دب اکبر','شکارچی','ثور'], answer:0, hint:'ستاره قطبی در انتهای دسته ملاقه کوچک (دب اصغر) قرار دارد.'},
+    {type:'mcq', q:'عمر خورشید حدوداً چقدر است؟', options:['۴.۶ میلیارد سال','۱ میلیارد سال','۱۰ میلیارد سال','۵۰۰ میلیون سال'], answer:0, hint:'خورشید حدود ۴.۶ میلیارد سال پیش از یک سحابی متولد شد.'},
+    {type:'mcq', q:'کدام سیاره بیشترین چگالی را در منظومه شمسی دارد؟', options:['زمین','مشتری','زحل','عطارد'], answer:0, hint:'زمین چگال‌ترین سیاره است؛ میانگین ۵.۵۱ گرم بر سانتی‌متر مکعب.'},
+    {type:'yn',  q:'آیا سیاه‌چاله‌ها نور را به دام می‌اندازند؟', options:['بله','خیر'], answer:0, hint:'گرانش سیاه‌چاله آن‌قدر قوی است که حتی نور هم نمی‌تواند از آن فرار کند.'},
+    {type:'mcq', q:'قمر «تیتان» متعلق به کدام سیاره است؟', options:['زحل','مشتری','اورانوس','نپتون'], answer:0, hint:'تیتان بزرگ‌ترین قمر زحل و تنها قمری با جو غلیظ است.'},
+    {type:'mcq', q:'یک «واحد نجومی» (AU) برابر است با...', options:['فاصله زمین تا خورشید','فاصله ماه تا زمین','قطر زمین','فاصله خورشید تا مشتری'], answer:0, hint:'هر AU حدود ۱۵۰ میلیون کیلومتر است.'},
+    {type:'tf',  q:'اورانوس تقریباً به پهلو حول محور خود می‌چرخد.', options:['صحیح','غلط'], answer:0, hint:'محور اورانوس حدود ۹۸ درجه کج است؛ مثل توپی که غلت می‌خورد.'},
+    {type:'mcq', q:'اولین انسانی که به ماه قدم گذاشت چه نام داشت؟', options:['نیل آرمسترانگ','باز آلدرین','یوری گاگارین','جان گلن'], answer:0, hint:'در مأموریت آپولو ۱۱ در سال ۱۹۶۹.'},
+    {type:'mcq', q:'کهکشان راه شیری از چه نوعی است؟', options:['مارپیچی','بیضوی','نامنظم','حلقه‌ای'], answer:0, hint:'راه شیری یک کهکشان مارپیچی میله‌ای است.'},
+    {type:'mcq', q:'کدام لایه خورشید را با چشم می‌بینیم؟', options:['شیدسپهر (فوتوسفر)','تاج خورشیدی','رنگین‌سپهر','هسته'], answer:0, hint:'فوتوسفر سطح نورانی خورشید است که نور مرئی از آن می‌آید.'},
+    {type:'yn',  q:'آیا مشتری هم حلقه دارد؟', options:['بله','خیر'], answer:0, hint:'بله، ولی حلقه‌های مشتری بسیار نازک و کم‌نورتر از زحل هستند.'},
+    {type:'mcq', q:'سرعت نور تقریباً چقدر است؟', options:['۳۰۰٬۰۰۰ کیلومتر بر ثانیه','۳۰٬۰۰۰ کیلومتر بر ثانیه','۳ میلیون کیلومتر بر ثانیه','۳۰۰۰ کیلومتر بر ثانیه'], answer:0, hint:'دقیقاً ۲۹۹٬۷۹۲ کیلومتر بر ثانیه در خلأ.'},
+    {type:'tf',  q:'زهره داغ‌ترین سیاره منظومه شمسی است.', options:['صحیح','غلط'], answer:0, hint:'با وجود اینکه عطارد نزدیک‌تر است، جو غلیظ زهره گرما را حبس می‌کند.'},
+    {type:'mcq', q:'ستاره‌ها بیشتر از چه چیزی ساخته شده‌اند؟', options:['گاز و پلاسما','سنگ','یخ','فلز'], answer:0, hint:'عمدتاً هیدروژن و هلیوم در حالت پلاسما.'},
+    {type:'mcq', q:'نظریه نسبیت را چه کسی مطرح کرد؟', options:['آلبرت اینشتین','آیزاک نیوتن','گالیله','یوهانس کپلر'], answer:0, hint:'اینشتین در سال ۱۹۰۵ نسبیت خاص و در ۱۹۱۵ نسبیت عام را ارائه داد.'},
+    {type:'mcq', q:'دورترین سیاره منظومه شمسی از خورشید کدام است؟', options:['نپتون','اورانوس','زحل','پلوتو'], answer:0, hint:'نپتون آخرین سیاره رسمی منظومه شمسی است.'},
+    {type:'tf',  q:'پلوتو دیگر یک سیاره کامل محسوب نمی‌شود.', options:['صحیح','غلط'], answer:0, hint:'در سال ۲۰۰۶ به عنوان «سیاره کوتوله» طبقه‌بندی شد.'},
+    {type:'mcq', q:'خورشید در کدام مرحله از چرخه زندگی خود قرار دارد؟', options:['رشته اصلی','غول سرخ','کوتوله سفید','سحابی سیاره‌ای'], answer:0, hint:'خورشید حدود نیمی از عمر ۱۰ میلیارد ساله‌اش را گذرانده است.'},
+    {type:'yn',  q:'آیا کهکشان آندرومدا به سمت ما نزدیک می‌شود؟', options:['بله','خیر'], answer:0, hint:'حدود ۴ میلیارد سال دیگر با راه شیری برخورد و ادغام خواهد شد.'},
+    {type:'mcq', q:'جرم خورشید حدوداً چند برابر جرم زمین است؟', options:['حدود ۳۳۰ هزار برابر','حدود ۱۰۰ برابر','حدود ۱۰۰۰ برابر','حدود ۳ میلیون برابر'], answer:0, hint:'خورشید ۹۹.۸ درصد جرم کل منظومه شمسی را در خود دارد.'}
+  ]
+};
+
+/* ============================================================
+   وضعیت بازی
+   ============================================================ */
+const AVATARS = ['🚀','👩‍🚀','🧑‍🚀','🛸','👽','🌟','🪐','🔭','🛰️','🌙','☄️','🌌'];
+const BASE_POINTS = {easy:100, medium:150, hard:200};
+const TIME_LIMIT  = {easy:25, medium:20, hard:15};
+const LEAGUE_KEY  = 'astro_league_v1';
+
+const state = {
+  players: [
+    {name:'کاوشگر ۱', avatar:'🚀', score:0, roundScore:0, roundWins:0},
+    {name:'کاوشگر ۲', avatar:'👩‍🚀', score:0, roundScore:0, roundWins:0}
+  ],
+  difficulty:'easy',
+  mode:'league',
+  qPerPlayer:5,
+  maxRounds:3,
+  round:1,
+  turnCount:0,
+  currentPlayer:0,
+  roundQuestions:[],
+  current:null,
+  timer:null,
+  timeLeft:0,
+  totalTime:0,
+  locked:true,
+  muted:false,
+  matchDecided:false
+};
+
+/* ============================================================
+   پس‌زمینه ستاره‌ای
+   ============================================================ */
+(function buildSpace(){
+  const box = document.getElementById('stars');
+  let html = '';
+  for(let i=0;i<170;i++){
+    const s = Math.random()*2.2+0.6;
+    html += `<div class="star" style="left:${Math.random()*100}%;top:${Math.random()*100}%;width:${s}px;height:${s}px;animation-delay:${(Math.random()*3.4).toFixed(2)}s;animation-duration:${(2.5+Math.random()*3).toFixed(2)}s"></div>`;
+  }
+  box.innerHTML = html;
+
+  const orbs = [
+    {e:'🪐', t:'8%',  r:'4%',  s:'70px', d:'9s'},
+    {e:'🌍', t:'70%', r:'6%',  s:'54px', d:'11s'},
+    {e:'☄️', t:'22%', r:'88%', s:'46px', d:'8s'},
+    {e:'⭐', t:'78%', r:'84%', s:'40px', d:'7s'},
+    {e:'🌙', t:'48%', r:'92%', s:'38px', d:'10s'}
+  ];
+  orbs.forEach((o,i)=>{
+    const d = document.createElement('div');
+    d.className = 'orb';
+    d.textContent = o.e;
+    d.style.cssText = `position:fixed;top:${o.t};right:${o.r};font-size:${o.s};animation:float ${o.d} ease-in-out infinite;animation-delay:${i*0.7}s;opacity:.28;z-index:-1;pointer-events:none`;
+    document.body.appendChild(d);
+  });
+})();
+
+/* ============================================================
+   صدا
+   ============================================================ */
+let audioCtx = null;
+function tone(freq, dur, type='sine', vol=0.07){
+  if(state.muted) return;
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + dur);
+  }catch(e){}
+}
+function sfxCorrect(){ tone(660,.12,'sine'); setTimeout(()=>tone(880,.16,'sine'),110); setTimeout(()=>tone(1180,.22,'sine'),240); }
+function sfxWrong(){ tone(220,.2,'sawtooth',.05); setTimeout(()=>tone(160,.28,'sawtooth',.05),150); }
+function sfxTick(){ tone(1000,.04,'square',.025); }
+function sfxClick(){ tone(520,.06,'triangle',.05); }
+function toggleMute(){
+  state.muted = !state.muted;
+  document.getElementById('muteBtn').textContent = state.muted ? '🔇' : '🔊';
+}
+
+/* ============================================================
+   ابزارها
+   ============================================================ */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function prepare(raw){
+  const q = {...raw, options:[...raw.options]};
+  if(raw.icons) q.icons = [...raw.icons];
+  if(q.type==='mcq' || q.type==='image'){
+    const order = q.options.map((_,i)=>i);
+    shuffle(order);
+    q.options = order.map(i=>raw.options[i]);
+    if(raw.icons) q.icons = order.map(i=>raw.icons[i]);
+    q.answer = order.indexOf(raw.answer);
+  }
+  return q;
+}
+function drawQuestions(n){
+  const pool = QUESTIONS[state.difficulty];
+  const out = [];
+  while(out.length < n){
+    const sh = shuffle([...pool]);
+    out.push(...sh);
+  }
+  return out.slice(0,n);
+}
+function confetti(){
+  const colors = ['#4cc9f0','#9d4edd','#ffd166','#06d6a0','#ef476f','#ffffff'];
+  for(let i=0;i<90;i++){
+    const d = document.createElement('div');
+    d.className = 'confetti';
+    const sz = 5 + Math.random()*9;
+    d.style.left = Math.random()*100 + 'vw';
+    d.style.width = sz+'px';
+    d.style.height = sz+'px';
+    d.style.background = colors[Math.floor(Math.random()*colors.length)];
+    d.style.animationDelay = (Math.random()*0.9)+'s';
+    d.style.animationDuration = (1.9+Math.random()*1.7)+'s';
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(), 4200);
+  }
+}
+
+/* ============================================================
+   آواتارها در صفحه تنظیمات
+   ============================================================ */
+function buildAvatars(){
+  [0,1].forEach(pi=>{
+    const box = document.getElementById('av'+pi);
+    box.innerHTML = '';
+    AVATARS.forEach(a=>{
+      const b = document.createElement('button');
+      b.className = 'av' + (state.players[pi].avatar===a ? ' sel':'');
+      b.textContent = a;
+      b.onclick = ()=>{
+        sfxClick();
+        state.players[pi].avatar = a;
+        box.querySelectorAll('.av').forEach(x=>x.classList.remove('sel'));
+        b.classList.add('sel');
+      };
+      box.appendChild(b);
+    });
+  });
+}
+buildAvatars();
+
+/* انتخاب سطح دشواری */
+document.getElementById('diffChips').addEventListener('click', e=>{
+  const b = e.target.closest('.chip'); if(!b) return;
+  sfxClick();
+  document.querySelectorAll('#diffChips .chip').forEach(c=>c.classList.remove('sel'));
+  b.classList.add('sel');
+  state.difficulty = b.dataset.diff;
+});
+/* انتخاب حالت بازی */
+document.getElementById('modeChips').addEventListener('click', e=>{
+  const b = e.target.closest('.chip'); if(!b) return;
+  sfxClick();
+  document.querySelectorAll('#modeChips .chip').forEach(c=>c.classList.remove('sel'));
+  b.classList.add('sel');
+  state.mode = b.dataset.mode;
+});
+
+/* ============================================================
+   شروع بازی
+   ============================================================ */
+function startGame(){
+  const n0 = document.getElementById('name0').value.trim() || 'کاوشگر ۱';
+  const n1 = document.getElementById('name1').value.trim() || 'کاوشگر ۲';
+
+  state.players[0].name = n0;
+  state.players[1].name = n1;
+  state.players.forEach(p=>{ p.score = 0; p.roundScore = 0; p.roundWins = 0; });
+
+  state.round = 1;
+  state.qPerPlayer = state.mode === 'league' ? 5 : 3;
+  state.matchDecided = false;
+
+  document.getElementById('modeBadge').textContent = state.mode === 'league' ? 'لیگ 🏅' : 'حذفی 🔥';
+
+  // کارت‌های بازیکن
+  [0,1].forEach(i=>{
+    document.getElementById('pav'+i).textContent = state.players[i].avatar;
+    document.getElementById('pnm'+i).textContent = state.players[i].name;
+  });
+
+  go('sc-game');
+  sfxClick();
+  startRound();
+}
+
+/* ============================================================
+   دور
+   ============================================================ */
+function startRound(){
+  state.players.forEach(p=>p.roundScore = 0);
+  state.turnCount = 0;
+  state.roundQuestions = drawQuestions(state.qPerPlayer * 2);
+  document.getElementById('roundNum').textContent = fa(state.round);
+  updateScoreboard();
+  showTurnFlash(()=> nextQuestion());
+}
+
+function showTurnFlash(cb){
+  const p = state.players[state.turnCount % 2];
+  const el = document.createElement('div');
+  el.className = 'turnflash';
+  el.innerHTML = `<div class="tf-in"><span class="tf-av">${p.avatar}</span><div class="tf-nm">نوبت ${p.name}</div></div>`;
+  document.body.appendChild(el);
+  setTimeout(()=>{ el.remove(); cb && cb(); }, 1150);
+}
+
+function nextQuestion(){
+  if(state.turnCount >= state.qPerPlayer * 2){ endRound(); return; }
+
+  state.currentPlayer = state.turnCount % 2;
+  state.current = prepare(state.roundQuestions[state.turnCount]);
+  state.turnCount++;
+  state.locked = false;
+
+  highlightActive();
+  renderQuestion();
+  startTimer(TIME_LIMIT[state.difficulty]);
+}
+
+function highlightActive(){
+  document.getElementById('pc0').classList.toggle('active', state.currentPlayer===0);
+  document.getElementById('pc1').classList.toggle('active', state.currentPlayer===1);
+  const p = state.players[state.currentPlayer];
+  document.getElementById('turnLabel').textContent = `نوبت: ${p.name} ${p.avatar}`;
+}
+
+function renderQuestion(){
+  const q = state.current;
+  const typeNames = {mcq:'چهارگزینه‌ای 🔤', image:'تصویری 🖼️', yn:'بله / خیر ✅', tf:'صحیح / غلط ⚖️'};
+  document.getElementById('qType').textContent = typeNames[q.type] || 'سوال';
+
+  const qNum = Math.floor((state.turnCount - 1) / 2) + 1;
+  document.getElementById('qProgress').textContent = `سوال ${fa(qNum)} از ${fa(state.qPerPlayer)}`;
+
+  const vis = document.getElementById('qVisual');
+  if(q.visual){ vis.style.display = 'block'; vis.textContent = q.visual; }
+  else { vis.style.display = 'none'; vis.textContent = ''; }
+
+  document.getElementById('qText').textContent = q.q;
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.innerHTML = '';
+
+  const box = document.getElementById('options');
+  box.className = 'options' + (q.options.length === 2 ? ' two' : '');
+  box.innerHTML = '';
+  q.options.forEach((opt,i)=>{
+    const b = document.createElement('button');
+    b.className = 'opt' + (q.icons ? ' img-opt' : '');
+    b.innerHTML = (q.icons ? `<span class="opt-emoji">${q.icons[i]}</span>` : '') +
+                  `<span class="opt-label">${opt}</span>`;
+    b.onclick = ()=> answer(i);
+    box.appendChild(b);
+  });
+}
+
+/* ============================================================
+   تایمر
+   ============================================================ */
+function startTimer(seconds){
+  clearInterval(state.timer);
+  state.totalTime = seconds;
+  state.timeLeft = seconds;
+  updateTimerUI();
+  let lastWhole = Math.ceil(seconds);
+  state.timer = setInterval(()=>{
+    state.timeLeft = Math.max(0, state.timeLeft - 0.1);
+    const w = Math.ceil(state.timeLeft);
+    if(w !== lastWhole){ lastWhole = w; if(w<=5 && w>0) sfxTick(); }
+    updateTimerUI();
+    if(state.timeLeft <= 0){
+      clearInterval(state.timer);
+      timeUp();
+    }
+  }, 100);
+}
+function stopTimer(){ clearInterval(state.timer); }
+function updateTimerUI(){
+  const pct = state.totalTime ? (state.timeLeft/state.totalTime)*100 : 0;
+  const fill = document.getElementById('timerFill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct > 50 ? 'var(--green)' : pct > 25 ? 'var(--gold)' : 'var(--red)';
+  document.getElementById('timeLabel').textContent = '⏱ ' + fa(Math.ceil(state.timeLeft));
+}
+
+/* ============================================================
+   پاسخ
+   ============================================================ */
+function answer(idx){
+  if(state.locked) return;
+  state.locked = true;
+  stopTimer();
+
+  const q = state.current;
+  const btns = [...document.querySelectorAll('#options .opt')];
+  btns.forEach(b=>b.disabled = true);
+
+  const correct = idx === q.answer;
+  btns[q.answer].classList.add('correct');
+  if(!correct) btns[idx].classList.add('wrong');
+  btns.forEach((b,i)=>{ if(i!==q.answer && i!==idx) b.classList.add('dim'); });
+
+  const fb = document.getElementById('feedback');
+  if(correct){
+    const bonus = Math.round(state.timeLeft * 3);
+    const gain = BASE_POINTS[state.difficulty] + bonus;
+    state.players[state.currentPlayer].score += gain;
+    state.players[state.currentPlayer].roundScore += gain;
+    fb.className = 'feedback ok show';
+    fb.innerHTML = `<span class="fb-title">🎉 آفرین! پاسخ درست بود</span>
+      امتیاز: <b>${fa(BASE_POINTS[state.difficulty])}</b> + پاداش سرعت <b>${fa(bonus)}</b> = <b>${fa(gain)}</b> امتیاز
+      <br>💡 ${q.hint}`;
+    sfxCorrect();
+    updateScoreboard();
+  } else {
+    fb.className = 'feedback no show';
+    const chosen = q.options[idx];
+    fb.innerHTML = `<span class="fb-title">❌ اشتباه بود!</span>
+      پاسخ درست: <b>${q.options[q.answer]}</b>${chosen ? ` — پاسخ تو: ${chosen}` : ''}
+      <br>💡 ${q.hint}`;
+    sfxWrong();
+  }
+
+  setTimeout(()=>{ nextQuestion(); }, correct ? 2100 : 2600);
+}
+
+function timeUp(){
+  if(state.locked) return;
+  state.locked = true;
+  const q = state.current;
+  const btns = [...document.querySelectorAll('#options .opt')];
+  btns.forEach(b=>b.disabled = true);
+  btns[q.answer].classList.add('correct');
+  btns.forEach((b,i)=>{ if(i!==q.answer) b.classList.add('dim'); });
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback no show';
+  fb.innerHTML = `<span class="fb-title">⏰ زمان تمام شد!</span>
+    پاسخ درست: <b>${q.options[q.answer]}</b><br>💡 ${q.hint}`;
+  sfxWrong();
+  setTimeout(()=>{ nextQuestion(); }, 2500);
+}
+
+function updateScoreboard(){
+  [0,1].forEach(i=>{
+    document.getElementById('psc'+i).textContent = fa(state.players[i].score);
+  });
+}
+
+/* ============================================================
+   پایان دور
+   ============================================================ */
+function endRound(){
+  stopTimer();
+  document.getElementById('pc0').classList.remove('active');
+  document.getElementById('pc1').classList.remove('active');
+
+  const [a,b] = state.players;
+
+  if(state.mode === 'league'){ showFinal(); return; }
+
+  // حالت حذفی
+  let winnerIdx = -1;
+  if(a.roundScore > b.roundScore) winnerIdx = 0;
+  else if(b.roundScore > a.roundScore) winnerIdx = 1;
+
+  if(winnerIdx >= 0) state.players[winnerIdx].roundWins++;
+
+  const icon = document.getElementById('roundIcon');
+  const title = document.getElementById('roundTitle');
+  const sub = document.getElementById('roundSub');
+
+  if(winnerIdx >= 0){
+    const w = state.players[winnerIdx];
+    icon.textContent = '🎯';
+    title.textContent = `${w.avatar} ${w.name} این دور را برد!`;
+    sub.textContent = `نتیجه دور ${fa(state.round)} مشخص شد`;
+    sfxCorrect();
+  } else {
+    icon.textContent = '🤝';
+    title.textContent = 'مساوی!';
+    sub.textContent = `این دور برنده‌ای نداشت`;
+  }
+
+  const sc = document.getElementById('roundScores');
+  sc.innerHTML = [0,1].map(i=>{
+    const p = state.players[i];
+    const isWin = i === winnerIdx;
+    return `<div class="score-line ${isWin?'winner':''}">
+      <div class="nm"><span style="font-size:1.4rem">${p.avatar}</span>
+        <span>${p.name}</span>
+        <span class="roundpips">${Array.from({length:2}).map((_,k)=>
+          `<span class="pip ${p.roundWins>k?'on':''}"></span>`).join('')}</span>
+      </div>
+      <div class="val">${fa(p.roundScore)} <span style="font-size:.75rem;color:var(--muted)">امتیاز دور</span></div>
+    </div>`;
+  }).join('');
+
+  const decided = state.players[0].roundWins >= 2 || state.players[1].roundWins >= 2 || state.round >= state.maxRounds;
+  state.matchDecided = decided;
+  document.getElementById('roundNextBtn').textContent = decided ? 'دیدن نتیجه نهایی 🏆' : 'دور بعدی ➜';
+
+  go('sc-round');
+}
+
+function afterRound(){
+  if(state.matchDecided){ showFinal(); return; }
+  state.round++;
+  go('sc-game');
+  startRound();
+}
+
+/* ============================================================
+   نتیجه نهایی
+   ============================================================ */
+function showFinal(){
+  const [a,b] = state.players;
+  let winnerIdx = -1;
+  let title = '', sub = '', icon = '🏆';
+
+  if(state.mode === 'league'){
+    if(a.score > b.score) winnerIdx = 0;
+    else if(b.score > a.score) winnerIdx = 1;
+  } else {
+    if(a.roundWins > b.roundWins) winnerIdx = 0;
+    else if(b.roundWins > a.roundWins) winnerIdx = 1;
+  }
+
+  if(winnerIdx >= 0){
+    const w = state.players[winnerIdx];
+    title = `${w.avatar} ${w.name} قهرمان کهکشان شد!`;
+    sub = state.mode === 'league'
+      ? `با کسب ${fa(w.score)} امتیاز در سطح ${diffName()}`
+      : `با برد ${fa(w.roundWins)} دور از ${fa(state.round)} دور`;
+    icon = '🏆';
+    sfxCorrect();
+  } else {
+    title = 'مساوی! هر دو قهرمانید 🤝';
+    sub = 'نتیجه برابر شد — یک بازی دیگر انجام دهید!';
+    icon = '🤝';
+  }
+
+  document.getElementById('finalIcon').textContent = icon;
+  document.getElementById('finalTitle').textContent = title;
+  document.getElementById('finalSub').textContent = sub;
+
+  const fs = document.getElementById('finalScores');
+  fs.innerHTML = [0,1].map(i=>{
+    const p = state.players[i];
+    const isWin = i === winnerIdx;
+    const detail = state.mode === 'league'
+      ? `${fa(p.score)} امتیاز`
+      : `${fa(p.score)} امتیاز • ${fa(p.roundWins)} برد دور`;
+    return `<div class="score-line ${isWin?'winner':''}">
+      <div class="nm"><span style="font-size:1.5rem">${p.avatar}</span><span>${p.name}</span></div>
+      <div class="val">${detail}</div>
+    </div>`;
+  }).join('');
+
+  // ثبت در لیگ
+  state.players.forEach((p,i)=> recordLeague(p.name, p.score, i === winnerIdx));
+
+  go('sc-final');
+  confetti();
+}
+
+function diffName(){
+  return {easy:'آسان', medium:'متوسط', hard:'سخت'}[state.difficulty];
+}
+
+function rematch(){
+  sfxClick();
+  go('sc-setup');
+}
+
+function quitGame(){
+  if(!confirm('از بازی خارج می‌شوی؟ امتیازهای این مسابقه ذخیره نمی‌شود.')) return;
+  stopTimer();
+  go('sc-home');
+}
+
+/* ============================================================
+   لیگ / ذخیره‌سازی
+   ============================================================ */
+function recordLeague(name, score, won){
+  try{
+    const db = JSON.parse(localStorage.getItem(LEAGUE_KEY) || '{}');
+    const rec = db[name] || {name, total:0, games:0, wins:0, best:0};
+    rec.total += score;
+    rec.games += 1;
+    rec.wins  += won ? 1 : 0;
+    rec.best   = Math.max(rec.best, score);
+    db[name] = rec;
+    localStorage.setItem(LEAGUE_KEY, JSON.stringify(db));
+  }catch(e){}
+}
+
+function renderLeague(){
+  const body = document.getElementById('leagueBody');
+  let db = {};
+  try{ db = JSON.parse(localStorage.getItem(LEAGUE_KEY) || '{}'); }catch(e){}
+
+  const list = Object.values(db).sort((x,y)=> y.total - x.total || y.wins - x.wins);
+
+  if(!list.length){
+    body.innerHTML = `<div class="empty">
+      🌌 هنوز هیچ بازیکنی ثبت نشده است.<br>
+      یک بازی انجام بده تا نامت در جدول لیگ ثبت شود!
+    </div>`;
+    return;
+  }
+
+  body.innerHTML = `
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th class="rank">#</th>
+          <th>بازیکن</th>
+          <th>بازی</th>
+          <th>برد</th>
+          <th>امتیاز کل</th>
+          <th>رکورد</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${list.map((r,i)=>`
+          <tr>
+            <td class="rank"><span>${fa(i+1)}</span></td>
+            <td>${escapeHtml(r.name)}</td>
+            <td>${fa(r.games)}</td>
+            <td>${fa(r.wins)}</td>
+            <td class="num">${fa(r.total)}</td>
+            <td class="num" style="color:var(--cyan)">${fa(r.best)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+    <div class="hintbox" style="margin-top:16px">
+      🏅 جدول بر اساس <b>مجموع امتیاز</b> مرتب شده است. برای پاک کردن رکوردها روی 🗑 در بالای صفحه بزن.
+    </div>
+  `;
+}
+
+function clearLeague(){
+  if(!confirm('همه رکوردهای لیگ پاک شود؟')) return;
+  localStorage.removeItem(LEAGUE_KEY);
+  renderLeague();
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ============================================================
+   کلیدهای میان‌بر (۱ تا ۴)
+   ============================================================ */
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('sc-game').classList.contains('active')) return;
+  const n = parseInt(e.key, 10);
+  if(n >= 1 && n <= 4){
+    const btns = document.querySelectorAll('#options .opt');
+    if(btns[n-1] && !btns[n-1].disabled) btns[n-1].click();
+  }
+});
+</script>
+</body>
+</html>
